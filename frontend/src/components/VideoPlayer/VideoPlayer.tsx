@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState } from 'react';
+import { useVideoTracking } from '../../hooks/useVideoTracking';
 import './VideoPlayer.css';
 
 interface VideoPlayerProps {
@@ -45,8 +46,15 @@ function waitForPlayerAPI(): Promise<BBPlayer> {
 export default function VideoPlayer({ mediaclipId, userId }: VideoPlayerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<BBPlayer | null>(null);
+  const [player, setPlayer] = useState<BBPlayer | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const { hasReached40, hasCompleted } = useVideoTracking({
+    player,
+    userId,
+    mediaclipId,
+  });
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -54,6 +62,7 @@ export default function VideoPlayer({ mediaclipId, userId }: VideoPlayerProps) {
 
     setLoading(true);
     setError(null);
+    setPlayer(null);
     playerRef.current = null;
 
     // clear previous player
@@ -70,6 +79,7 @@ export default function VideoPlayer({ mediaclipId, userId }: VideoPlayerProps) {
         if (cancelled) return;
         setLoading(false);
         playerRef.current = bbPlayer;
+        setPlayer(bbPlayer);
       })
       .catch((err) => {
         if (cancelled) return;
@@ -87,6 +97,7 @@ export default function VideoPlayer({ mediaclipId, userId }: VideoPlayerProps) {
           // ignore for now 
         }
         playerRef.current = null;
+        setPlayer(null);
       }
     };
   }, [mediaclipId]);
@@ -105,6 +116,16 @@ export default function VideoPlayer({ mediaclipId, userId }: VideoPlayerProps) {
         <div className="video-player-loading">Loading video player...</div>
       )}
       <div ref={containerRef} className="video-player-container" />
+      {userId !== null && (
+        <div className="tracking-status">
+          <span className={hasReached40 ? 'reached' : ''}>
+            {hasReached40 ? '40% watched' : 'Watching...'}
+          </span>
+          <span className={hasCompleted ? 'reached' : ''}>
+            {hasCompleted ? 'Completed' : 'Not completed'}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

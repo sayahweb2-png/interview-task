@@ -33,3 +33,16 @@
   font-size: 0.95rem;
   margin: 24px 0;
 }
+
+.tracking-status {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 14px;
+  color: #666;
+}
+
+.tracking-status .reached {
+  color: #22c55e;
+  font-weight: 500;
+}

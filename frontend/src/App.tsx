@@ -1,8 +1,13 @@
+import { Routes, Route } from 'react-router-dom';
+import PostPage from './pages/PostPage/PostPage';
+import './App.css';
+
 function App() {
   return (
     <div className="app">
-      <h1>BB Challenge</h1>
-      <p>Application ready.</p>
+      <Routes>
+        <Route path="/post/:id" element={<PostPage />} />
+      </Routes>
     </div>
   );
 }

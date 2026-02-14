@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getPost, getUser } from '../../services/api';
 import { useUser } from '../../hooks/useUser';
+import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
 import type { Post } from '../../types/post';
 import type { User } from '../../types/user';
 import './PostPage.css';
@@ -89,7 +90,7 @@ export default function PostPage() {
       {post.mediaclipId ? (
         <section className="video-section">
           <h2 className="video-section-title">Video</h2>
-          <p>Video player for clip {post.mediaclipId} will be embedded here.</p>
+          <VideoPlayer mediaclipId={post.mediaclipId} userId={userId} />
         </section>
       ) : (
         <div className="no-video">

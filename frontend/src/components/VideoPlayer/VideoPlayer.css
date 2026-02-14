@@ -1,0 +1,35 @@
+.video-player-wrapper {
+  margin: 24px 0;
+}
+
+.video-player-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-player-loading {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #1a1a1a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.video-player-error {
+  width: 100%;
+  padding: 40px 20px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  text-align: center;
+  color: #dc2626;
+  font-size: 0.95rem;
+  margin: 24px 0;
+}

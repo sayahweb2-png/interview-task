@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getPost, getUser } from '../../services/api';
+import { useUser } from '../../hooks/useUser';
 import type { Post } from '../../types/post';
 import type { User } from '../../types/user';
 import './PostPage.css';
 
 export default function PostPage() {
   const { id } = useParams<{ id: string }>();
+  const { userId, isIdentified } = useUser();
 
   const [post, setPost] = useState<Post | null>(null);
   const [author, setAuthor] = useState<User | null>(null);
@@ -61,6 +63,18 @@ export default function PostPage() {
       <Link to="/" className="back-link">
         Back to posts
       </Link>
+
+      <div className="user-banner">
+        {isIdentified ? (
+          <span className="user-banner-identified">
+            Watching as User #{userId}
+          </span>
+        ) : (
+          <span className="user-banner-anonymous">
+            Anonymous viewer — watch progress won't be tracked
+          </span>
+        )}
+      </div>
 
       <article className="post-content">
         <h1 className="post-title">{post.title}</h1>

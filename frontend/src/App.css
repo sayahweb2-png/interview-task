@@ -66,7 +66,21 @@ body {
   min-width: 32px;
 }
 
-/* Shared */
+.post-card-title {
+  flex: 1;
+  text-transform: capitalize;
+}
+
+.has-video {
+  font-size: 0.75rem;
+  background: #eff6ff;
+  color: #3b82f6;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* shared */
 a {
   color: #3b82f6;
   text-decoration: none;

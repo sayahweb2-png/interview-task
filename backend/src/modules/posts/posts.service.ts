@@ -14,6 +14,28 @@ export class PostsService {
     private readonly mappingService: MappingService,
   ) {}
 
+  // fetches all posts from JSONPlaceholder and enriches each with its mediaclipId
+  async getAllPosts(): Promise<PostWithVideo[]> {
+    try {
+      const { data } = await firstValueFrom(
+        this.httpService.get<Post[]>(`${JSONPLACEHOLDER_BASE_URL}/posts`),
+      );
+
+      return data.map((post) => ({
+        ...post,
+        mediaclipId: this.mappingService.getMediaclipId(post.id),
+      }));
+    } catch (error: any) {
+      this.logger.error(`failed to fetch posts: ${error.message}`);
+
+      throw new HttpException(
+        'failed to fetch posts from external api',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+  }
+
+  // fetches a single post by ID and enriches it with mediaclipId
   async getPostById(id: number): Promise<PostWithVideo> {
     try {
       const { data } = await firstValueFrom(
